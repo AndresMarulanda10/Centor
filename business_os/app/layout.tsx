@@ -1,18 +1,19 @@
+// Import global styles and Next.js types
 import "@/styles/globals.css";
 import { Metadata, Viewport } from "next";
-import { Link } from "@heroui/link";
-import clsx from "clsx";
+import clsx from "clsx"; // Utility for constructing className strings
 
+// Import custom components and configurations
 import { Providers } from "./providers";
 
 import { siteConfig } from "@/config/site";
 import { fontSans } from "@/config/fonts";
-import { Navbar } from "@/components/navbar";
 
+// Define metadata for the application
 export const metadata: Metadata = {
   title: {
     default: siteConfig.name,
-    template: `%s - ${siteConfig.name}`,
+    template: `%s - ${siteConfig.name}`, // Template for page titles
   },
   description: siteConfig.description,
   icons: {
@@ -20,6 +21,7 @@ export const metadata: Metadata = {
   },
 };
 
+// Define viewport settings including theme color based on color scheme
 export const viewport: Viewport = {
   themeColor: [
     { media: "(prefers-color-scheme: light)", color: "white" },
@@ -27,36 +29,37 @@ export const viewport: Viewport = {
   ],
 };
 
+// Root layout component that wraps all pages
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   return (
+    // Base HTML structure with hydration warning suppressed
     <html suppressHydrationWarning lang="en">
       <head />
       <body
         className={clsx(
           "min-h-screen bg-background font-sans antialiased",
-          fontSans.variable,
+          fontSans.variable, // Apply custom font
         )}
       >
+        {/* Theme provider wrapper with dark theme default */}
         <Providers themeProps={{ attribute: "class", defaultTheme: "dark" }}>
+          {/* Main layout structure */}
           <div className="relative flex flex-col h-screen">
-            <Navbar />
+            {/* Main content area */}
             <main className="container mx-auto max-w-7xl pt-16 px-6 flex-grow">
               {children}
             </main>
-            <footer className="w-full flex items-center justify-center py-3">
-              <Link
-                isExternal
-                className="flex items-center gap-1 text-current"
-                href="https://heroui.com?utm_source=next-app-template"
-                title="heroui.com homepage"
-              >
-                <span className="text-default-600">Powered by</span>
-                <p className="text-primary">HeroUI</p>
-              </Link>
+            {/* Footer area */}
+            <footer className="border-muted-foreground py-4">
+              <div className="container mx-auto max-w-7xl px-6">
+                <p className="text-center text-sm text-muted-foreground">
+                  Andres Marulanda © 2025. All rights reserved.
+                </p>
+              </div>
             </footer>
           </div>
         </Providers>

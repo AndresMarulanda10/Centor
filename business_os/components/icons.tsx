@@ -2,6 +2,7 @@ import * as React from "react";
 
 import { IconSvgProps } from "@/types";
 
+// Logo component - Renders a custom SVG logo
 export const Logo: React.FC<IconSvgProps> = ({
   size = 36,
   width,
@@ -24,6 +25,7 @@ export const Logo: React.FC<IconSvgProps> = ({
   </svg>
 );
 
+// Discord icon component - Renders the Discord logo
 export const DiscordIcon: React.FC<IconSvgProps> = ({
   size = 24,
   width,
@@ -45,6 +47,7 @@ export const DiscordIcon: React.FC<IconSvgProps> = ({
   );
 };
 
+// Twitter icon component - Renders the Twitter/X logo
 export const TwitterIcon: React.FC<IconSvgProps> = ({
   size = 24,
   width,
@@ -66,6 +69,7 @@ export const TwitterIcon: React.FC<IconSvgProps> = ({
   );
 };
 
+// GitHub icon component - Renders the GitHub logo
 export const GithubIcon: React.FC<IconSvgProps> = ({
   size = 24,
   width,
@@ -89,6 +93,7 @@ export const GithubIcon: React.FC<IconSvgProps> = ({
   );
 };
 
+// Moon icon component - Used for dark theme toggle
 export const MoonFilledIcon = ({
   size = 24,
   width,
@@ -111,6 +116,7 @@ export const MoonFilledIcon = ({
   </svg>
 );
 
+// Sun icon component - Used for light theme toggle
 export const SunFilledIcon = ({
   size = 24,
   width,
@@ -133,6 +139,7 @@ export const SunFilledIcon = ({
   </svg>
 );
 
+// Heart icon component - Used for like/favorite actions
 export const HeartFilledIcon = ({
   size = 24,
   width,
@@ -158,6 +165,7 @@ export const HeartFilledIcon = ({
   </svg>
 );
 
+// Search icon component - Used for search functionality
 export const SearchIcon = (props: IconSvgProps) => (
   <svg
     aria-hidden="true"
