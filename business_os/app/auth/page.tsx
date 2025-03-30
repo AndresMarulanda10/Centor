@@ -1,18 +1,23 @@
+// Enable client-side functionality
 "use client";
 
+// Import necessary dependencies
 import React from "react";
 import { Button, Input, Link, Divider } from "@heroui/react";
 import { AnimatePresence, m, LazyMotion, domAnimation } from "framer-motion";
 import { Icon } from "@iconify/react";
 
-export default function Component() {
+export default function AuthComponent() {
+  // State to control form visibility
   const [isFormVisible, setIsFormVisible] = React.useState(false);
 
+  // Animation variants for fade and slide effects
   const variants = {
     visible: { opacity: 1, y: 0 },
     hidden: { opacity: 0, y: 10 },
   };
 
+  // Reusable divider component with "OR" text
   const orDivider = (
     <div className="flex items-center gap-4 py-2">
       <Divider className="flex-1" />
@@ -22,13 +27,18 @@ export default function Component() {
   );
 
   return (
-    <section className="max-h-screen flex flex-col items-center justify-center gap-4 py-8 md:py-10">
+    // Main container section
+    <section className="flex flex-col items-center justify-center gap-4 py-8 md:py-10">
       <div className="flex h-full w-full items-center justify-center">
+        {/* Auth form container */}
         <div className="flex w-full max-w-sm flex-col gap-4 rounded-large bg-content1 px-8 pb-10 pt-6 shadow-small">
+          {/* LazyMotion wrapper for optimized animation loading */}
           <LazyMotion features={domAnimation}>
             <h1 className="mb-4 text-xl font-medium">Sign Up</h1>
+            {/* AnimatePresence handles enter/exit animations */}
             <AnimatePresence initial={false} mode="popLayout">
               {isFormVisible ? (
+                // Email/Password signup form
                 <m.form
                   animate="visible"
                   className="flex flex-col gap-y-3"
@@ -37,6 +47,7 @@ export default function Component() {
                   variants={variants}
                   onSubmit={(e) => e.preventDefault()}
                 >
+                  {/* Email input field */}
                   <Input
                     isRequired
                     label="Email Address"
@@ -44,6 +55,7 @@ export default function Component() {
                     type="email"
                     variant="bordered"
                   />
+                  {/* Password input field */}
                   <Input
                     isRequired
                     label="Password"
@@ -51,10 +63,12 @@ export default function Component() {
                     type="password"
                     variant="bordered"
                   />
+                  {/* Submit button */}
                   <Button color="primary" type="submit">
                     Sign Up
                   </Button>
                   {orDivider}
+                  {/* Back to options button */}
                   <Button
                     fullWidth
                     startContent={
@@ -71,7 +85,9 @@ export default function Component() {
                   </Button>
                 </m.form>
               ) : (
+                // Social login options
                 <div>
+                  {/* Email option button */}
                   <Button
                     fullWidth
                     color="primary"
@@ -87,6 +103,7 @@ export default function Component() {
                     Continue with Email
                   </Button>
                   {orDivider}
+                  {/* Social login buttons container */}
                   <m.div
                     animate="visible"
                     className="flex flex-col gap-y-2"
@@ -94,6 +111,7 @@ export default function Component() {
                     initial="hidden"
                     variants={variants}
                   >
+                    {/* Google login button */}
                     <Button
                       fullWidth
                       startContent={
@@ -103,6 +121,7 @@ export default function Component() {
                     >
                       Continue with Google
                     </Button>
+                    {/* GitHub login button */}
                     <Button
                       fullWidth
                       startContent={
@@ -116,6 +135,7 @@ export default function Component() {
                     >
                       Continue with GitHub
                     </Button>
+                    {/* Login link for existing users */}
                     <p className="mt-3 text-center text-small">
                       Already have an account?&nbsp;
                       <Link href="#" size="sm">
