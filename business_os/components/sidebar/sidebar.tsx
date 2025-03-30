@@ -271,6 +271,14 @@ const Sidebar = React.forwardRef<HTMLElement, SidebarProps>(
       [isCompact, hideEndContent, iconClassName, itemClasses?.base],
     );
 
+    // Función para manejar la navegación cuando se hace clic en un elemento
+    const handleItemClick = React.useCallback((item: SidebarItem) => {
+      if (item.href) {
+        // Usar window.location para navegación directa
+        window.location.href = item.href;
+      }
+    }, []);
+
     // Main render method
     return (
       <Listbox
@@ -287,7 +295,7 @@ const Sidebar = React.forwardRef<HTMLElement, SidebarProps>(
         itemClasses={{
           ...itemClasses,
           base: cn(
-            "px-3 min-h-11 rounded-large h-[44px] data-[selected=true]:bg-default-100",
+            "px-3 min-h-11 rounded-large h-[44px] data-[selected=true]:bg-default-100 cursor-pointer",
             itemClasses?.base,
           ),
           title: cn(
@@ -301,7 +309,13 @@ const Sidebar = React.forwardRef<HTMLElement, SidebarProps>(
         variant="flat"
         onSelectionChange={(keys) => {
           const key = Array.from(keys)[0];
-
+          const selectedItem = items.find(item => item.key === key);
+          
+          // Si el elemento tiene un href, navegar a esa URL
+          if (selectedItem && selectedItem.href) {
+            handleItemClick(selectedItem);
+          }
+          
           setSelected(key as React.Key);
           onSelect?.(key as string);
         }}

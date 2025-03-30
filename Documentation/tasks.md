@@ -14,10 +14,10 @@
 
 ## Desarrollo/Importación de Componentes
 
-### Barra de Navegación
+### ✅ Barra de Navegación
 - Secciones de la Aplicación: Crear una barra de navegación que permita el acceso a diferentes secciones como “Proyectos”, “Tareas”, “Clientes”, “Finanzas”, “Equipo”, “Marketing” y “Empresa”.
 
-### Dashboard
+### ✅ Dashboard
 - Vista General: Desarrollar un panel que proporcione una visión general del estado de tareas y proyectos, incluyendo métricas clave y gráficos de progreso.
 
 ### Gestión de Tareas

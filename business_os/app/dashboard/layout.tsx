@@ -2,6 +2,7 @@
 
 import React from "react";
 import { Avatar, Button, ScrollShadow, Spacer } from "@heroui/react";
+import SidebarNavigation from "../../components/navigation/sidebar-navigation";
 import { Icon } from "@iconify/react";
 import { cn } from "@heroui/react";
 import { AcmeIcon } from "@acme";
@@ -21,12 +22,18 @@ import SidebarMenu from "@sidebar";
  * <Sidebar defaultSelectedKey="home" selectedKeys={[currentPath]} />
  * ```
  */
-export default function SidebarLayout() {
+interface SidebarLayoutProps {
+  children: React.ReactNode;
+}
+
+export default function SidebarLayout({ children }: SidebarLayoutProps) {
   const [isHidden, setIsHidden] = React.useState(false);
 
   return (
     // Main container with flex layout
     <div className="flex h-screen w-full">
+      {/* Componente de navegación para la barra lateral */}
+      <SidebarNavigation />
       {/* Sidebar container with conditional classes for hiding/showing */}
       <div
         className={cn(
@@ -108,7 +115,9 @@ export default function SidebarLayout() {
 
         {/* Main content container */}
         <main className="mt-4 flex-1 w-full overflow-visible">
-          <div className="flex h-[90%] w-full flex-col gap-4 rounded-medium border-small border-divider" />
+          <div className="flex h-[90%] w-full flex-col gap-4 rounded-medium border-small border-divider" data-component-name="SidebarLayout">
+            {children}
+          </div>
         </main>
       </div>
     </div>

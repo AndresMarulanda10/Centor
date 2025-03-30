@@ -1,7 +1,4 @@
-import { Chip } from "@heroui/react";
-import { Icon } from "@iconify/react";
-
-import { type SidebarItem, SidebarItemType } from "./sidebar";
+import { type SidebarItem } from "./sidebar";
 import TeamAvatar from "./team-avatar";
 
 /**
@@ -23,81 +20,112 @@ export const items: SidebarItem[] = [
     href: "#",
     icon: "solar:widget-2-outline",
     title: "Projects",
-    // Additional content shown at end of item
-    endContent: (
-      <Icon
-        className="text-default-400"
-        icon="solar:add-circle-line-duotone"
-        width={24}
-      />
-    ),
   },
   {
     key: "tasks",
-    href: "#",
+    href: "http://localhost:3000/dashboard/tasks",
     icon: "solar:checklist-minimalistic-outline",
     title: "Tasks",
-    endContent: (
-      <Icon
-        className="text-default-400"
-        icon="solar:add-circle-line-duotone"
-        width={24}
-      />
-    ),
   },
   {
-    key: "team",
+    key: "timesheet",
     href: "#",
-    icon: "solar:users-group-two-rounded-outline",
-    title: "Team",
+    icon: "hugeicons:time-03",
+    title: "Timesheet",
   },
   {
-    key: "tracker",
+    key: "customers_crm",
     href: "#",
-    icon: "solar:sort-by-time-linear",
-    title: "Tracker",
-    endContent: (
-      <Chip size="sm" variant="flat">
-        {/* Chip component showing "New" label */}
-        New
-      </Chip>
-    ),
+    title: "Customers CRM",
+    icon: "tabler:progress-x",
   },
   {
-    key: "analytics",
+    key: "reports",
     href: "#",
-    icon: "solar:chart-outline",
-    title: "Analytics",
+    title: "Reports",
+    icon: "tabler:progress-x",
   },
   {
-    key: "perks",
+    key: "incomes",
     href: "#",
-    icon: "solar:gift-linear",
-    title: "Perks",
-    endContent: (
-      <Chip size="sm" variant="flat">
-        {/* Chip showing number "3" */}3
-      </Chip>
-    ),
+    title: "Incomes",
+    icon: "tabler:progress-x",
+  },
+  {
+    key: "invoives",
+    href: "#",
+    title: "Invoices",
+    icon: "tabler:progress-x",
   },
   {
     key: "expenses",
     href: "#",
-    icon: "solar:bill-list-outline",
     title: "Expenses",
+    icon: "tabler:progress-x",
   },
   {
-    key: "settings",
+    key: "suscribtions",
     href: "#",
-    icon: "solar:settings-outline",
-    title: "Settings",
+    title: "Suscribtions",
+    icon: "tabler:progress-x",
+  },
+  {
+    key: "salaries",
+    href: "#",
+    title: "Salaries",
+    icon: "tabler:progress-x",
+  },
+  {
+    key: "proposals",
+    href: "#",
+    title: "Proposals",
+    icon: "tabler:progress-x",
+  },
+  {
+    key: "agreements",
+    href: "#",
+    title: "Agreements",
+    icon: "tabler:progress-x",
+  },
+  {
+    key: "services",
+    href: "#",
+    title: "Services",
+    icon: "tabler:progress-x",
+  },
+  {
+    key: "content-planner",
+    href: "#",
+    title: "Content Planner",
+    icon: "tabler:progress-x",
+  },
+  {
+    key: "ad-campaigns",
+    href: "#",
+    title: "Ad Campaigns",
+    icon: "tabler:progress-x",
+  },
+  {
+    key: "documents",
+    href: "#",
+    title: "Documents",
+  },
+  {
+    key: "notes-resources",
+    href: "#",
+    title: "Notes & Resources",
+  },
+  {
+    key: "okr-goal-tracker",
+    href: "#",
+    title: "OKR Goal Tracker",
   },
 ];
 
 export const sectionItems: SidebarItem[] = [
   {
-    key: "overview",
-    title: "Overview",
+    key: "work",
+    title: "Work",
     items: [
       {
         key: "home",
@@ -110,405 +138,177 @@ export const sectionItems: SidebarItem[] = [
         href: "#",
         icon: "solar:widget-2-outline",
         title: "Projects",
-        endContent: (
-          <Icon
-            className="text-default-400"
-            icon="solar:add-circle-line-duotone"
-            width={24}
-          />
-        ),
       },
       {
         key: "tasks",
         href: "#",
         icon: "solar:checklist-minimalistic-outline",
         title: "Tasks",
-        endContent: (
-          <Icon
-            className="text-default-400"
-            icon="solar:add-circle-line-duotone"
-            width={24}
-          />
-        ),
       },
       {
-        key: "team",
+        key: "timesheet",
         href: "#",
-        icon: "solar:users-group-two-rounded-outline",
-        title: "Team",
-      },
-      {
-        key: "tracker",
-        href: "#",
-        icon: "solar:sort-by-time-linear",
-        title: "Tracker",
-        endContent: (
-          <Chip size="sm" variant="flat">
-            New
-          </Chip>
-        ),
+        icon: "hugeicons:time-03",
+        title: "Timesheet",
       },
     ],
   },
   {
-    key: "organization",
-    title: "Organization",
+    key: "crm",
+    title: "CRM",
     items: [
       {
-        key: "cap_table",
+        key: "customers_crm",
         href: "#",
-        title: "Cap Table",
-        icon: "solar:pie-chart-2-outline",
-        items: [
-          {
-            key: "shareholders",
-            href: "#",
-            title: "Shareholders",
-          },
-          {
-            key: "note_holders",
-            href: "#",
-            title: "Note Holders",
-          },
-          {
-            key: "transactions_log",
-            href: "#",
-            title: "Transactions Log",
-          },
-        ],
+        title: "Customers CRM",
+        icon: "tabler:progress-x",
+      },
+    ],
+  },
+  {
+    key: "finance",
+    title: "Finance",
+    items: [
+      {
+        key: "reports",
+        href: "#",
+        title: "Reports",
+        icon: "tabler:progress-x",
       },
       {
-        key: "analytics",
+        key: "incomes",
         href: "#",
-        icon: "solar:chart-outline",
-        title: "Analytics",
+        title: "Incomes",
+        icon: "tabler:progress-x",
       },
       {
-        key: "perks",
-        href: "/perks",
-        icon: "solar:gift-linear",
-        title: "Perks",
-        endContent: (
-          <Chip size="sm" variant="flat">
-            3
-          </Chip>
-        ),
+        key: "invoives",
+        href: "#",
+        title: "Invoices",
+        icon: "tabler:progress-x",
       },
       {
         key: "expenses",
         href: "#",
-        icon: "solar:bill-list-outline",
         title: "Expenses",
+        icon: "tabler:progress-x",
       },
       {
-        key: "settings",
-        href: "/settings",
-        icon: "solar:settings-outline",
-        title: "Settings",
+        key: "suscribtions",
+        href: "#",
+        title: "Suscribtions",
+        icon: "tabler:progress-x",
+      },
+      {
+        key: "salaries",
+        href: "#",
+        title: "Salaries",
+        icon: "tabler:progress-x",
+      },
+      {
+        key: "proposals",
+        href: "#",
+        title: "Proposals",
+        icon: "tabler:progress-x",
+      },
+      {
+        key: "agreements",
+        href: "#",
+        title: "Agreements",
+        icon: "tabler:progress-x",
+      },
+      {
+        key: "services",
+        href: "#",
+        title: "Services",
+        icon: "tabler:progress-x",
+      },
+    ],
+  },
+  {
+    key: "marketing",
+    title: "Marketing",
+    items: [
+      {
+        key: "content-planner",
+        href: "#",
+        title: "Content Planner",
+        icon: "tabler:progress-x",
+      },
+      {
+        key: "ad-campaigns",
+        href: "#",
+        title: "Ad Campaigns",
+        icon: "tabler:progress-x",
+      },
+    ],
+  },
+  {
+    key: "company",
+    title: "Company",
+    items: [
+      {
+        key: "documents",
+        href: "#",
+        title: "Documents",
+        icon: "tabler:progress-x",
+      },
+      {
+        key: "notes-resources",
+        href: "#",
+        title: "Notes & Resources",
+        icon: "tabler:progress-x",
+      },
+      {
+        key: "okr-goal-tracker",
+        href: "#",
+        title: "OKR Goal Tracker",
+        icon: "tabler:progress-x",
       },
     ],
   },
 ];
 
+/**
+ * Array that combines section items with team-related navigation items
+ * Each team item includes a custom TeamAvatar component as startContent
+ */
 export const sectionItemsWithTeams: SidebarItem[] = [
-  ...sectionItems,
+  ...sectionItems, // Spread existing section items
   {
-    key: "your-teams",
-    title: "Your Teams",
+    key: "teams", // Section identifier for teams
+    title: "Teams", // Section title
     items: [
       {
-        key: "heroui",
-        href: "#",
-        title: "HeroUI",
-        startContent: <TeamAvatar name="Hero UI" />,
+        key: "employees", // Unique identifier for employees
+        href: "#", // Navigation link
+        title: "Employees", // Display text
+        startContent: <TeamAvatar name="Employees" />, // Custom avatar component
       },
       {
-        key: "tailwind-variants",
+        key: "notice-board",
         href: "#",
-        title: "Tailwind Variants",
-        startContent: <TeamAvatar name="Tailwind Variants" />,
+        title: "Notice Board",
+        startContent: <TeamAvatar name="Notice Board" />,
       },
       {
-        key: "heroui-pro",
+        key: "events-calendar",
         href: "#",
-        title: "HeroUI Pro",
-        startContent: <TeamAvatar name="HeroUI Pro" />,
+        title: "Events Calendar",
+        startContent: <TeamAvatar name="Events Calendar" />,
+      },
+      {
+        key: "team-holidays",
+        href: "#",
+        title: "Team Holidays",
+        startContent: <TeamAvatar name="Team Holidays" />,
+      },
+      {
+        key: "assets",
+        href: "#",
+        title: "Assets",
+        startContent: <TeamAvatar name="Assets" />,
       },
     ],
-  },
-];
-
-export const brandItems: SidebarItem[] = [
-  {
-    key: "overview",
-    title: "Overview",
-    items: [
-      {
-        key: "home",
-        href: "#",
-        icon: "solar:home-2-linear",
-        title: "Home",
-      },
-      {
-        key: "projects",
-        href: "#",
-        icon: "solar:widget-2-outline",
-        title: "Projects",
-        endContent: (
-          <Icon
-            className="text-primary-foreground/60"
-            icon="solar:add-circle-line-duotone"
-            width={24}
-          />
-        ),
-      },
-      {
-        key: "tasks",
-        href: "#",
-        icon: "solar:checklist-minimalistic-outline",
-        title: "Tasks",
-        endContent: (
-          <Icon
-            className="text-primary-foreground/60"
-            icon="solar:add-circle-line-duotone"
-            width={24}
-          />
-        ),
-      },
-      {
-        key: "team",
-        href: "#",
-        icon: "solar:users-group-two-rounded-outline",
-        title: "Team",
-      },
-      {
-        key: "tracker",
-        href: "#",
-        icon: "solar:sort-by-time-linear",
-        title: "Tracker",
-        endContent: (
-          <Chip
-            className="bg-primary-foreground font-medium text-primary"
-            size="sm"
-            variant="flat"
-          >
-            New
-          </Chip>
-        ),
-      },
-    ],
-  },
-  {
-    key: "your-teams",
-    title: "Your Teams",
-    items: [
-      {
-        key: "heroui",
-        href: "#",
-        title: "HeroUI",
-        startContent: (
-          <TeamAvatar
-            classNames={{
-              base: "border-1 border-primary-foreground/20",
-              name: "text-primary-foreground/80",
-            }}
-            name="Hero UI"
-          />
-        ),
-      },
-      {
-        key: "tailwind-variants",
-        href: "#",
-        title: "Tailwind Variants",
-        startContent: (
-          <TeamAvatar
-            classNames={{
-              base: "border-1 border-primary-foreground/20",
-              name: "text-primary-foreground/80",
-            }}
-            name="Tailwind Variants"
-          />
-        ),
-      },
-      {
-        key: "heroui-pro",
-        href: "#",
-        title: "HeroUI Pro",
-        startContent: (
-          <TeamAvatar
-            classNames={{
-              base: "border-1 border-primary-foreground/20",
-              name: "text-primary-foreground/80",
-            }}
-            name="HeroUI Pro"
-          />
-        ),
-      },
-    ],
-  },
-];
-
-export const sectionLongList: SidebarItem[] = [
-  ...sectionItems,
-  {
-    key: "payments",
-    title: "Payments",
-    items: [
-      {
-        key: "payroll",
-        href: "#",
-        title: "Payroll",
-        icon: "solar:dollar-minimalistic-linear",
-      },
-      {
-        key: "invoices",
-        href: "#",
-        title: "Invoices",
-        icon: "solar:file-text-linear",
-      },
-      {
-        key: "billing",
-        href: "#",
-        title: "Billing",
-        icon: "solar:card-outline",
-      },
-      {
-        key: "payment-methods",
-        href: "#",
-        title: "Payment Methods",
-        icon: "solar:wallet-money-outline",
-      },
-      {
-        key: "payouts",
-        href: "#",
-        title: "Payouts",
-        icon: "solar:card-transfer-outline",
-      },
-    ],
-  },
-  {
-    key: "your-teams",
-    title: "Your Teams",
-    items: [
-      {
-        key: "heroui",
-        href: "#",
-        title: "HeroUI",
-        startContent: <TeamAvatar name="Hero UI" />,
-      },
-      {
-        key: "tailwind-variants",
-        href: "#",
-        title: "Tailwind Variants",
-        startContent: <TeamAvatar name="Tailwind Variants" />,
-      },
-      {
-        key: "heroui-pro",
-        href: "#",
-        title: "HeroUI Pro",
-        startContent: <TeamAvatar name="HeroUI Pro" />,
-      },
-    ],
-  },
-];
-
-export const sectionNestedItems: SidebarItem[] = [
-  {
-    key: "home",
-    href: "#",
-    icon: "solar:home-2-linear",
-    title: "Home",
-  },
-  {
-    key: "projects",
-    href: "#",
-    icon: "solar:widget-2-outline",
-    title: "Projects",
-    endContent: (
-      <Icon
-        className="text-default-400"
-        icon="solar:add-circle-line-duotone"
-        width={24}
-      />
-    ),
-  },
-  {
-    key: "tasks",
-    href: "#",
-    icon: "solar:checklist-minimalistic-outline",
-    title: "Tasks",
-    endContent: (
-      <Icon
-        className="text-default-400"
-        icon="solar:add-circle-line-duotone"
-        width={24}
-      />
-    ),
-  },
-  {
-    key: "team",
-    href: "#",
-    icon: "solar:users-group-two-rounded-outline",
-    title: "Team",
-  },
-  {
-    key: "tracker",
-    href: "#",
-    icon: "solar:sort-by-time-linear",
-    title: "Tracker",
-    endContent: (
-      <Chip size="sm" variant="flat">
-        New
-      </Chip>
-    ),
-  },
-  {
-    key: "analytics",
-    href: "#",
-    icon: "solar:chart-outline",
-    title: "Analytics",
-  },
-  {
-    key: "perks",
-    href: "#",
-    icon: "solar:gift-linear",
-    title: "Perks",
-    endContent: (
-      <Chip size="sm" variant="flat">
-        3
-      </Chip>
-    ),
-  },
-  {
-    key: "cap_table",
-    title: "Cap Table",
-    icon: "solar:pie-chart-2-outline",
-    type: SidebarItemType.Nest,
-    items: [
-      {
-        key: "shareholders",
-        icon: "solar:users-group-rounded-linear",
-        href: "#",
-        title: "Shareholders",
-      },
-      {
-        key: "note_holders",
-        icon: "solar:notes-outline",
-        href: "#",
-        title: "Note Holders",
-      },
-      {
-        key: "transactions_log",
-        icon: "solar:clipboard-list-linear",
-        href: "#",
-        title: "Transactions Log",
-      },
-    ],
-  },
-  {
-    key: "expenses",
-    href: "#",
-    icon: "solar:bill-list-outline",
-    title: "Expenses",
   },
 ];

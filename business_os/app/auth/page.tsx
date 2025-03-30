@@ -2,14 +2,21 @@
 "use client";
 
 // Import necessary dependencies
-import React from "react";
+import React, { useState } from "react";
 import { Button, Input, Link, Divider } from "@heroui/react";
 import { AnimatePresence, m, LazyMotion, domAnimation } from "framer-motion";
 import { Icon } from "@iconify/react";
+import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 export default function AuthComponent() {
   // State to control form visibility
-  const [isFormVisible, setIsFormVisible] = React.useState(false);
+  const [isFormVisible, setIsFormVisible] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  
+  const router = useRouter();
 
   // Animation variants for fade and slide effects
   const variants = {
@@ -45,7 +52,31 @@ export default function AuthComponent() {
                   exit="hidden"
                   initial="hidden"
                   variants={variants}
-                  onSubmit={(e) => e.preventDefault()}
+                  onSubmit={async (e) => {
+                    e.preventDefault();
+                    setLoading(true);
+                    
+                    try {
+                      // Intentar iniciar sesión con credenciales
+                      const result = await signIn('credentials', {
+                        email,
+                        password,
+                        redirect: false,
+                      });
+                      
+                      if (result?.error) {
+                        alert(result.error);
+                      } else {
+                        // Redireccionar al dashboard en caso de éxito
+                        router.push('/dashboard');
+                      }
+                    } catch (error) {
+                      console.error('Error al iniciar sesión:', error);
+                      alert('Error al iniciar sesión');
+                    } finally {
+                      setLoading(false);
+                    }
+                  }}
                 >
                   {/* Email input field */}
                   <Input
@@ -54,6 +85,9 @@ export default function AuthComponent() {
                     name="email"
                     type="email"
                     variant="bordered"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    disabled={loading}
                   />
                   {/* Password input field */}
                   <Input
@@ -62,10 +96,18 @@ export default function AuthComponent() {
                     name="password"
                     type="password"
                     variant="bordered"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    disabled={loading}
                   />
                   {/* Submit button */}
-                  <Button color="primary" type="submit">
-                    Sign Up
+                  <Button 
+                    color="primary" 
+                    type="submit"
+                    isLoading={loading}
+                    isDisabled={loading}
+                  >
+                    Sign In
                   </Button>
                   {orDivider}
                   {/* Back to options button */}
