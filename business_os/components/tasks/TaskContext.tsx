@@ -2,13 +2,17 @@
 
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
+
 import { Task } from "./types";
 
 // Define el tipo de nuestro contexto de tareas
 interface TaskContextType {
   tasks: Task[];
   addTask: (task: Omit<Task, "id" | "createdAt">) => void;
-  updateTask: (taskId: string, updatedTask: Partial<Omit<Task, "id" | "createdAt">>) => void;
+  updateTask: (
+    taskId: string,
+    updatedTask: Partial<Omit<Task, "id" | "createdAt">>,
+  ) => void;
   deleteTask: (taskId: string) => void;
   selectedTask: Task | null;
   setSelectedTask: (task: Task | null) => void;
@@ -27,11 +31,13 @@ export const TaskProvider: React.FC<{ children: React.ReactNode }> = ({
   const [tasks, setTasks] = useState<Task[]>(() => {
     if (typeof window !== "undefined") {
       const savedTasks = localStorage.getItem("tasks");
+
       return savedTasks ? JSON.parse(savedTasks) : [];
     }
+
     return [];
   });
-  
+
   // Estado para la tarea seleccionada
   const [selectedTask, setSelectedTask] = useState<Task | null>(null);
   // Estados para gestión de carga y errores
@@ -52,6 +58,7 @@ export const TaskProvider: React.FC<{ children: React.ReactNode }> = ({
       id: uuidv4(),
       createdAt: new Date().toISOString(),
     };
+
     setTasks([...tasks, newTask]);
   };
 
@@ -62,15 +69,15 @@ export const TaskProvider: React.FC<{ children: React.ReactNode }> = ({
   ) => {
     setTasks(
       tasks.map((task) =>
-        task.id === taskId ? { ...task, ...updatedTask } : task
-      )
+        task.id === taskId ? { ...task, ...updatedTask } : task,
+      ),
     );
   };
 
   // Función para eliminar una tarea
   const deleteTask = (taskId: string) => {
     setTasks(tasks.filter((task) => task.id !== taskId));
-    
+
     // Limpiar la tarea seleccionada si es la que se está eliminando
     if (selectedTask?.id === taskId) {
       setSelectedTask(null);
@@ -99,11 +106,11 @@ export const TaskProvider: React.FC<{ children: React.ReactNode }> = ({
 // Hook personalizado para usar el contexto de tareas
 export const useTaskContext = () => {
   const context = useContext(TaskContext);
-  
+
   // Lanzar error si el hook se usa fuera de TaskProvider
   if (context === undefined) {
     throw new Error("useTaskContext debe usarse dentro de un TaskProvider");
   }
-  
+
   return context;
 };
