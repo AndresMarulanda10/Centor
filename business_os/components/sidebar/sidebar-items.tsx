@@ -8,18 +8,22 @@ import TeamAvatar from "./team-avatar";
  * Please check the https://heroui.com/docs/guide/routing to have a seamless router integration
  */
 
+/**
+ * Array of sidebar navigation items
+ */
 export const items: SidebarItem[] = [
   {
-    key: "home",
-    href: "#",
-    icon: "solar:home-2-linear",
-    title: "Home",
+    key: "home", // Unique identifier for home item
+    href: "#", // Navigation link
+    icon: "solar:home-2-linear", // Icon name from solar icon set
+    title: "Home", // Display text
   },
   {
     key: "projects",
     href: "#",
     icon: "solar:widget-2-outline",
     title: "Projects",
+    // Additional content shown at end of item
     endContent: (
       <Icon
         className="text-default-400"
@@ -54,6 +58,7 @@ export const items: SidebarItem[] = [
     title: "Tracker",
     endContent: (
       <Chip size="sm" variant="flat">
+        {/* Chip component showing "New" label */}
         New
       </Chip>
     ),
@@ -71,7 +76,7 @@ export const items: SidebarItem[] = [
     title: "Perks",
     endContent: (
       <Chip size="sm" variant="flat">
-        3
+        {/* Chip showing number "3" */}3
       </Chip>
     ),
   },

@@ -36,7 +36,7 @@ export default function SidebarLayout() {
           },
         )}
       >
-        {/* Logo section */}
+        {/* Logo Acme section */}
         <div className="flex items-center gap-2 px-2">
           <div className="flex h-8 w-8 items-center justify-center rounded-full bg-foreground">
             <AcmeIcon className="text-background" />
@@ -69,21 +69,6 @@ export default function SidebarLayout() {
 
         {/* Bottom action buttons */}
         <div className="mt-auto flex flex-col">
-          {/* Help button */}
-          <Button
-            fullWidth
-            className="justify-start text-default-500 data-[hover=true]:text-foreground"
-            startContent={
-              <Icon
-                className="text-default-500"
-                icon="solar:info-circle-line-duotone"
-                width={24}
-              />
-            }
-            variant="light"
-          >
-            Help & Information
-          </Button>
           {/* Logout button */}
           <Button
             className="justify-start text-default-500 data-[hover=true]:text-foreground"
