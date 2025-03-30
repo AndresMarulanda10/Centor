@@ -19,8 +19,12 @@
         "name": "next"
       }
     ],
+    "baseUrl": ".",
     "paths": {
-      "@/*": ["./*"]
+      "@/*": ["./*"],
+      "@acme": ["components/sidebar/acme"],
+      "@sidebar-items": ["components/sidebar/sidebar-items"],
+      "@sidebar": ["components/sidebar/sidebar"],
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],

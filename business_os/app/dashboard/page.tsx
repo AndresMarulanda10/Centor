@@ -1,9 +1,11 @@
-import { title } from "@/components/primitives";
+"use client";
 
-export default function DocsPage() {
+import React from "react";
+
+export default function Component() {
   return (
     <div>
-      <h1 className={title()}>Docs</h1>
+      <h1>Hello World</h1>
     </div>
   );
 }
