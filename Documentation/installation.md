@@ -15,7 +15,7 @@ Antes de comenzar, asegúrate de tener instalado lo siguiente:
 ### 1. Clonar el Repositorio
 
 ```bash
-git clone <url-del-repositorio>
+git clone https://github.com/AndresMarulanda10/Business_OS
 cd Business_OS
 ```
 
