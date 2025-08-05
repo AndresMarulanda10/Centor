@@ -1,0 +1,13 @@
+{
+  "name": "@centor/logic",
+  "version": "1.0.0",
+  "private": true,
+  "main": "index.ts",
+  "scripts": {
+    "test": "jest"
+  },
+  "devDependencies": {
+    "@testing-library/react-hooks": "^8.0.1",
+    "jest": "^29.7.0"
+  }
+}

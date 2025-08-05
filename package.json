@@ -1,0 +1,27 @@
+{
+  "name": "centor-monorepo",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "web": "bun --cwd apps/web",
+    "mobile": "bun --cwd apps/mobile",
+    "build": "bun run web build && bun run mobile build",
+    "dev:web": "bun run web dev",
+    "dev:mobile": "bun run mobile start",
+    "lint": "bun run web lint && bun run mobile lint",
+    "test": "bun run test:web && bun run test:mobile",
+    "test:web": "bun run web test",
+    "test:mobile": "bun run mobile test",
+    "db:migrate": "bun --cwd apps/web prisma migrate dev",
+    "db:studio": "bun --cwd apps/web prisma studio"
+  },
+  "devDependencies": {
+    "@centor/eslint-config": "workspace:*",
+    "@centor/typescript-config": "workspace:*",
+    "prettier": "^3.0.0",
+    "typescript": "^5.0.0"
+  }
+}

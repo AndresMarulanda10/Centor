@@ -1,220 +1,378 @@
-# Guía de Instalación y Ejecución
+# Guía de Instalación y Configuración
 
-Esta guía proporciona instrucciones detalladas para configurar y ejecutar el proyecto Business OS en un entorno de desarrollo local.
+## Prerrequisitos
 
-## Requisitos Previos
+Antes de comenzar, asegúrate de tener instalado:
 
-Antes de comenzar, asegúrate de tener instalado lo siguiente:
+- **Bun**: v1.0.0 o superior ([Descargar Bun](https://bun.sh))
+- **Node.js**: v18.0.0 o superior (requerido por algunas dependencias)
+- **Git**: Para control de versiones
+- **PostgreSQL**: v14 o superior para la base de datos
+- **iOS Simulator** (macOS) o **Android Studio** (para desarrollo móvil)
 
-1. **Node.js** (versión 18.0.0 o superior)
-2. **Bun** (opcional, pero recomendado para mejor rendimiento)
-3. **Git** (para clonar el repositorio)
-
-## Pasos de Instalación
+## Instalación Inicial
 
 ### 1. Clonar el Repositorio
 
 ```bash
-git clone https://github.com/AndresMarulanda10/Business_OS
-cd Business_OS
+git clone https://github.com/tu-usuario/centor.git
+cd centor
 ```
 
-### 2. Instalar Dependencias
+### 2. Configurar Bun Workspaces
 
-Utilizando npm:
-```bash
-npm install
+El proyecto ya está configurado como monorepo. Verifica que el `package.json` raíz contenga:
+
+```json
+{
+  "private": true,
+  "workspaces": ["apps/*", "packages/*"]
+}
 ```
 
-O utilizando Bun (recomendado):
+### 3. Instalar Dependencias
+
 ```bash
+# Instalar todas las dependencias del monorepo
 bun install
 ```
 
-### 3. Configurar Variables de Entorno
+Este comando instalará las dependencias para todas las aplicaciones y paquetes compartidos.
 
-Crea un archivo `.env` en la raíz del proyecto con el siguiente contenido:
+## Configuración de la Base de Datos
 
+### 1. Configurar PostgreSQL
+
+Crea una base de datos PostgreSQL para el proyecto:
+
+```sql
+CREATE DATABASE centor_dev;
+CREATE USER centor_user WITH PASSWORD 'tu_password_seguro';
+GRANT ALL PRIVILEGES ON DATABASE centor_dev TO centor_user;
 ```
-# Base de datos
-DATABASE_URL="file:./dev.db"
 
-# NextAuth
+### 2. Variables de Entorno
+
+Crea un archivo `.env` en `apps/web/`:
+
+```env
+# Database
+DATABASE_URL="postgresql://centor_user:tu_password_seguro@localhost:5432/centor_dev"
+
+# NextAuth.js
 NEXTAUTH_URL="http://localhost:3000"
-NEXTAUTH_SECRET="tu-secreto-seguro-aqui"
+NEXTAUTH_SECRET="tu_nextauth_secret_muy_seguro"
 
-# Opcional: Proveedores de autenticación
-# GITHUB_ID="tu-github-id"
-# GITHUB_SECRET="tu-github-secret"
-# GOOGLE_ID="tu-google-id"
-# GOOGLE_SECRET="tu-google-secret"
+# OAuth Providers (opcional)
+GOOGLE_CLIENT_ID="tu_google_client_id"
+GOOGLE_CLIENT_SECRET="tu_google_client_secret"
 ```
 
-Reemplaza los valores de ejemplo con tus propias credenciales.
-
-### 4. Configurar la Base de Datos
-
-Inicializa la base de datos SQLite y aplica las migraciones:
+### 3. Configurar Prisma
 
 ```bash
-npx prisma migrate dev --name init
+# Navegar a la aplicación web
+cd apps/web
+
+# Generar el cliente Prisma
+bunx prisma generate
+
+# Ejecutar migraciones iniciales
+bunx prisma migrate dev --name init
+
+# (Opcional) Poblar la base de datos con datos de prueba
+bunx prisma db seed
 ```
 
-Este comando:
-- Crea la base de datos SQLite si no existe
-- Aplica las migraciones basadas en el esquema definido en `prisma/schema.prisma`
-- Genera el cliente Prisma
+## Configuración de la Aplicación Web
 
-### 5. Generar Datos de Prueba (Opcional)
+### 1. Configurar Shadcn UI
 
-Si deseas poblar la base de datos con datos de prueba:
+Shadcn UI ya debe estar configurado, pero verifica la configuración:
 
 ```bash
-npm run seed
+cd apps/web
+
+# Verificar configuración de Shadcn
+bunx shadcn@latest init
 ```
 
-o
+### 2. Configurar Tailwind CSS
+
+Verifica que `tailwind.config.ts` esté configurado correctamente:
+
+```typescript
+import type { Config } from 'tailwindcss'
+import { fontFamily } from 'tailwindcss/defaultTheme'
+
+const config: Config = {
+  darkMode: ['class'],
+  content: [
+    './pages/**/*.{ts,tsx}',
+    './components/**/*.{ts,tsx}',
+    './app/**/*.{ts,tsx}',
+    './src/**/*.{ts,tsx}',
+    '../../packages/design/**/*.{ts,tsx}', // Incluir design package
+  ],
+  theme: {
+    extend: {
+      fontFamily: {
+        sans: ['var(--font-sans)', ...fontFamily.sans],
+      },
+    },
+  },
+  plugins: [require('tailwindcss-animate')],
+}
+
+export default config
+```
+
+## Configuración de la Aplicación Móvil
+
+### 1. Configurar Expo
 
 ```bash
-bun run seed
+# Navegar a la aplicación móvil
+cd apps/mobile
+
+# Verificar configuración de Expo
+bunx expo install --fix
 ```
 
-## Ejecución del Proyecto
+### 2. Configurar Variables de Entorno
 
-### Modo Desarrollo
+Crea un archivo `.env` en `apps/mobile/`:
 
-Para ejecutar el proyecto en modo desarrollo con recarga en caliente:
+```env
+EXPO_PUBLIC_API_URL="http://localhost:3000/api"
+```
+
+### 3. Configurar EAS (opcional para desarrollo local)
 
 ```bash
-npm run dev
+# Instalar EAS CLI globalmente
+bun add -g eas-cli
+
+# Login a Expo
+bunx eas login
+
+# Configurar EAS Build
+bunx eas build:configure
 ```
 
-o
+## Configuración de Paquetes Compartidos
+
+### 1. Package Logic
+
+Verifica que `packages/logic/package.json` tenga la configuración correcta:
+
+```json
+{
+  "name": "@centor/logic",
+  "version": "1.0.0",
+  "main": "index.ts",
+  "exports": {
+    ".": "./index.ts",
+    "./hooks": "./hooks/index.ts",
+    "./types": "./types/index.ts",
+    "./utils": "./utils/index.ts"
+  },
+  "dependencies": {
+    "react": "^18.0.0",
+    "zod": "^3.22.0"
+  }
+}
+```
+
+### 2. Package Design
+
+Configura el paquete de diseño en `packages/design/package.json`:
+
+```json
+{
+  "name": "@centor/design",
+  "version": "1.0.0",
+  "main": "index.ts",
+  "exports": {
+    ".": "./index.ts",
+    "./tokens": "./tokens/index.ts",
+    "./config": "./config/index.ts"
+  },
+  "dependencies": {
+    "tailwindcss": "^3.4.0"
+  }
+}
+```
+
+## Configuración de Testing
+
+### 1. Jest para Web
+
+Verifica la configuración de Jest en `apps/web/jest.config.js`:
+
+```javascript
+const nextJest = require('next/jest')
+
+const createJestConfig = nextJest({
+  dir: './',
+})
+
+const customJestConfig = {
+  setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
+  moduleNameMapper: {
+    '^@/(.*)$': '<rootDir>/$1',
+    '^@centor/(.*)$': '<rootDir>/../../packages/$1',
+  },
+  testEnvironment: 'jest-environment-jsdom',
+}
+
+module.exports = createJestConfig(customJestConfig)
+```
+
+### 2. Jest para Móvil
+
+Configura Jest en `apps/mobile/jest.config.js`:
+
+```javascript
+module.exports = {
+  preset: 'jest-expo',
+  setupFilesAfterEnv: ['@testing-library/jest-native/extend-expect'],
+  moduleNameMapper: {
+    '^@centor/(.*)$': '<rootDir>/../../packages/$1',
+  },
+  transformIgnorePatterns: [
+    'node_modules/(?!(@react-native|expo|@expo|react-native|@testing-library/react-native)/)',
+  ],
+}
+```
+
+## Scripts de Desarrollo
+
+Agrega estos scripts al `package.json` raíz:
+
+```json
+{
+  "scripts": {
+    "dev": "bun run dev:web",
+    "dev:web": "cd apps/web && bun run dev",
+    "dev:mobile": "cd apps/mobile && bunx expo start",
+    "build": "bun run build:web && bun run build:mobile",
+    "build:web": "cd apps/web && bun run build",
+    "build:mobile": "cd apps/mobile && bunx eas build --platform all",
+    "test": "bun run test:web && bun run test:mobile",
+    "test:web": "cd apps/web && bun run test",
+    "test:mobile": "cd apps/mobile && bun run test",
+    "lint": "bun run lint:web && bun run lint:mobile",
+    "lint:web": "cd apps/web && bun run lint",
+    "lint:mobile": "cd apps/mobile && bun run lint",
+    "db:migrate": "cd apps/web && bunx prisma migrate dev",
+    "db:generate": "cd apps/web && bunx prisma generate",
+    "db:studio": "cd apps/web && bunx prisma studio"
+  }
+}
+```
+
+## Verificación de la Instalación
+
+### 1. Aplicación Web
 
 ```bash
-bun run dev
+# Iniciar la aplicación web
+bun run dev:web
 ```
 
-La aplicación estará disponible en [http://localhost:3000](http://localhost:3000).
+Visita `http://localhost:3000` para verificar que la aplicación funciona.
 
-### Construcción para Producción
-
-Para construir la aplicación para producción:
+### 2. Aplicación Móvil
 
 ```bash
-npm run build
+# Iniciar Expo
+bun run dev:mobile
 ```
 
-o
+Escanea el código QR con la app Expo Go en tu dispositivo móvil.
+
+### 3. Base de Datos
 
 ```bash
-bun run build
+# Abrir Prisma Studio
+bun run db:studio
 ```
 
-### Ejecutar en Modo Producción
+Verifica que puedes acceder a `http://localhost:5555` y ver las tablas.
 
-Para iniciar la aplicación en modo producción después de construirla:
+### 4. Tests
 
 ```bash
-npm run start
+# Ejecutar todos los tests
+bun run test
+
+# Tests específicos
+bun run test:web    # Solo tests web
+bun run test:mobile # Solo tests móvil
 ```
-
-o
-
-```bash
-bun run start
-```
-
-## Estructura de la Base de Datos
-
-Business OS utiliza Prisma ORM con SQLite para desarrollo. El esquema de la base de datos incluye las siguientes entidades principales:
-
-- **User**: Usuarios del sistema con roles y permisos
-- **Task**: Tareas con propiedades como título, descripción, estado, etc.
-- **Project**: Proyectos que pueden contener múltiples tareas
-- **Comment**: Comentarios asociados a tareas
-- **Activity**: Registro de actividades relacionadas con tareas
-
-Puedes explorar la base de datos utilizando Prisma Studio:
-
-```bash
-npx prisma studio
-```
-
-Esto abrirá una interfaz web en [http://localhost:5555](http://localhost:5555) donde podrás ver y editar los datos.
-
-## Acceso a la Aplicación
-
-Una vez que la aplicación esté en ejecución, puedes acceder a ella a través de tu navegador web:
-
-1. Abre [http://localhost:3000](http://localhost:3000)
-2. Inicia sesión con las credenciales predeterminadas:
-   - Email: admin@example.com
-   - Contraseña: password123
-   
-   (O registra un nuevo usuario si has configurado la autenticación)
-
-3. Explora las diferentes secciones de la aplicación, incluyendo el módulo de gestión de tareas.
 
 ## Solución de Problemas Comunes
 
-### Error al iniciar la aplicación
+### Error: "Module not found @centor/logic"
 
-Si encuentras errores al iniciar la aplicación, verifica:
-
-1. Que todas las dependencias estén instaladas correctamente
-2. Que las variables de entorno estén configuradas adecuadamente
-3. Que la base de datos esté inicializada
-
-### Error de conexión a la base de datos
-
-Si hay problemas con la conexión a la base de datos:
-
-1. Verifica que la URL de la base de datos en el archivo `.env` sea correcta
-2. Asegúrate de que las migraciones se hayan aplicado correctamente
-3. Comprueba los permisos del archivo de la base de datos SQLite
-
-### Problemas con Next.js
-
-Si encuentras errores relacionados con Next.js:
-
-1. Limpia la caché de Next.js:
-   ```bash
-   rm -rf .next
-   ```
-2. Reinstala las dependencias y vuelve a iniciar la aplicación
-
-## Desarrollo y Pruebas
-
-### Ejecutar Linting
-
-Para verificar y corregir problemas de estilo en el código:
+**Solución**: Asegúrate de que las dependencias están instaladas correctamente:
 
 ```bash
-npm run lint
+bun install
+cd apps/web && bun install
+cd ../mobile && bun install
 ```
 
-### Estructura de Archivos para Desarrollo
+### Error: "Database connection failed"
 
-Al desarrollar nuevas características, sigue la estructura de archivos existente:
+**Solución**: Verifica que PostgreSQL esté ejecutándose y las credenciales sean correctas:
 
-- Componentes en `/components/[módulo]`
-- Páginas en `/app/[ruta]`
-- Tipos en `/types` o junto a los componentes relevantes
-- API Routes en `/app/api/[recurso]`
+```bash
+# Verificar conexión
+cd apps/web
+bunx prisma db push
+```
 
-## Despliegue
+### Error: "Expo Go can't connect"
 
-Para desplegar la aplicación en un entorno de producción, se recomienda:
+**Solución**: Asegúrate de que tu dispositivo y computadora están en la misma red WiFi, o usa un túnel:
 
-1. Cambiar la base de datos a una solución más robusta como PostgreSQL o MySQL
-2. Configurar variables de entorno para producción
-3. Utilizar servicios como Vercel o Netlify para el despliegue automatizado
+```bash
+cd apps/mobile
+bunx expo start --tunnel
+```
 
-## Recursos Adicionales
+### Error: "Tailwind classes not working"
 
-- [Documentación de Next.js](https://nextjs.org/docs)
-- [Documentación de Prisma](https://www.prisma.io/docs)
-- [Documentación de NextAuth.js](https://next-auth.js.org/getting-started/introduction)
-- [Documentación de Tailwind CSS](https://tailwindcss.com/docs)
-- [Documentación de HeroUI](https://heroui.com/docs)
+**Solución**: Verifica que la configuración de Tailwind incluya los paquetes compartidos:
+
+```typescript
+// En tailwind.config.ts
+content: [
+  './app/**/*.{js,ts,jsx,tsx}',
+  '../../packages/**/*.{js,ts,jsx,tsx}', // Importante
+]
+```
+
+## Próximos Pasos
+
+Una vez completada la instalación:
+
+1. Lee la [guía de desarrollo](./development.md)
+2. Revisa la [arquitectura del sistema](./architecture.md)
+3. Explora las [decisiones arquitectónicas](./architectural-decisions.md)
+4. Configura el [deployment y CI/CD](./deployment.md)
+
+## Soporte
+
+Si encuentras problemas durante la instalación:
+
+1. Revisa los logs de error completos
+2. Verifica que todas las versiones de las herramientas sean correctas
+3. Consulta la documentación oficial de cada herramienta
+4. Abre un issue en el repositorio del proyecto
+
+---
+
+¡La instalación está completa! Ahora puedes comenzar a desarrollar en el monorepo Centor.
